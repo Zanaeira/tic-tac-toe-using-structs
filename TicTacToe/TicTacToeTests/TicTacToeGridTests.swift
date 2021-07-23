@@ -61,4 +61,12 @@ class TicTacToeGridTests: XCTestCase {
         XCTAssertNil(sut.fillSlot(at: greaterThanThreeXCoordinates))
     }
     
+    func test_fillSlot_yCoordinateCantBeGreaterThanThree() {
+        let sut = TicTacToeGrid()
+        
+        let greaterThanThreeYCoordinates = Coordinates(x: 1, y: 4)
+        
+        XCTAssertNil(sut.fillSlot(at: greaterThanThreeYCoordinates))
+    }
+    
 }
