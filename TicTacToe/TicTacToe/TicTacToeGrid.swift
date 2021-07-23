@@ -21,7 +21,7 @@ public struct TicTacToeGrid {
     
     public func fillSlot(at coordinates: Coordinates, for player: Player) -> TicTacToeGrid? {
         guard isWithinGridBounds(coordinates: coordinates),
-              slots[coordinates] == nil else { return nil }
+              slotIsNotAlreadyFilled(at: coordinates) else { return nil }
         
         var newSlots =  slots
         newSlots[coordinates] = player
@@ -35,6 +35,10 @@ public struct TicTacToeGrid {
     
     private func isWithinGridBounds(coordinates: Coordinates) -> Bool {
         return (1...3 ~= coordinates.x) && (1...3 ~= coordinates.y)
+    }
+    
+    private func slotIsNotAlreadyFilled(at coordinates: Coordinates) -> Bool {
+        return slots[coordinates] == nil
     }
     
 }
