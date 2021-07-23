@@ -30,7 +30,7 @@ public struct TicTacToeGrid {
     }
     
     public func player(at coordinates: Coordinates) -> Player? {
-        return .player1
+        return slots[coordinates]
     }
     
     private func isWithinGridBounds(coordinates: Coordinates) -> Bool {

@@ -67,6 +67,19 @@ class TicTacToeGridTests: XCTestCase {
         XCTAssertEqual(grid?.player(at: coordinates), Player.player1)
     }
     
+    func test_fillSlot_canAddMultiplePlayers() {
+        var sut: TicTacToeGrid? = TicTacToeGrid()
+        
+        let player1coordinates = Coordinates(x: 1, y: 1)
+        sut = sut?.fillSlot(at: player1coordinates, for: .player1)
+        
+        let player2coordinates = Coordinates(x: 1, y: 2)
+        sut = sut?.fillSlot(at: player2coordinates, for: .player2)
+        
+        XCTAssertEqual(sut?.player(at: player1coordinates), Player.player1)
+        XCTAssertEqual(sut?.player(at: player2coordinates), Player.player2)
+    }
+    
     func test_fillSlot_cannotAddPlayerToAlreadyFilledSlot() {
         var sut: TicTacToeGrid? = TicTacToeGrid()
         
