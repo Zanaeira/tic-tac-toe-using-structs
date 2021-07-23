@@ -1,6 +1,6 @@
 //
 //  TicTacToeGridTests.swift
-//  TicTacToeGridTests
+//  TicTacToeTests
 //
 //  Created by Suhayl Ahmed on 22/07/2021.
 //
