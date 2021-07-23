@@ -26,6 +26,10 @@ struct TicTacToeGame {
     func playMove(at coordinates: Coordinates) -> TicTacToeGameState? {
         guard let newGrid = grid.fillSlot(at: coordinates, for: currentPlayer) else { return nil }
         
+        if newGrid.checkForWin() {
+            return .winner(winner: currentPlayer)
+        }
+        
         let player: Player = currentPlayer == .player1 ? .player2 : .player1
         let game = TicTacToeGame(nextPlayer: player, newGrid: newGrid)
         
@@ -36,6 +40,7 @@ struct TicTacToeGame {
 
 enum TicTacToeGameState {
     case playing(game: TicTacToeGame, nextPlayer: Player)
+    case winner(winner: Player)
 }
 
 class TicTacToeGameTests: XCTestCase {
@@ -98,6 +103,43 @@ class TicTacToeGameTests: XCTestCase {
         }
         
         XCTAssertNil(game.playMove(at: coordinates))
+    }
+    
+    func test_playMove_returnsWinnerOnWin() {
+        guard let winningGameState = gameWithWinner() else {
+            return XCTFail("Winning game expected, nil game state found")
+        }
+        
+        print(winningGameState)
+        
+        guard case TicTacToeGameState.winner = winningGameState else {
+            return XCTFail("Winning game expected, \(winningGameState) found")
+        }
+    }
+    
+    // MARK: - Helpers
+    private func gameWithWinner() -> TicTacToeGameState? {
+        var game = TicTacToeGame()
+        var gameState: TicTacToeGameState?
+        let moves: [Coordinates] = [.init(x: 1, y: 1),
+                                    .init(x: 2, y: 1),
+                                    .init(x: 1, y: 2),
+                                    .init(x: 2, y: 2),
+                                    .init(x: 1, y: 3)]
+        
+        moves.forEach { coordinates in
+            guard let newGameState = game.playMove(at: coordinates) else {
+                return XCTFail("playMove returned nil")
+            }
+            
+            switch newGameState {
+            case let .playing(gameInProgress, _): game = gameInProgress
+            case .winner: gameState = newGameState
+            }
+            
+            gameState = game.playMove(at: coordinates)
+        }
+        return gameState
     }
     
 }
