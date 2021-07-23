@@ -10,27 +10,26 @@ import TicTacToe
 
 struct TicTacToeGame {
     
-    private let nextPlayer: Player
+    private let currentPlayer: Player
+    private let grid: TicTacToeGrid
     
     init() {
-        nextPlayer = .player1
+        currentPlayer = .player1
+        grid = TicTacToeGrid()
     }
     
-    private init(player: Player) {
-        nextPlayer = player
+    private init(nextPlayer: Player, newGrid: TicTacToeGrid) {
+        currentPlayer = nextPlayer
+        grid = newGrid
     }
     
     func playMove(at coordinates: Coordinates) -> TicTacToeGameState? {
-        guard isWithinGridBounds(coordinates: coordinates) else { return nil }
+        guard let newGrid = grid.fillSlot(at: coordinates, for: currentPlayer) else { return nil }
         
-        let player: Player = nextPlayer == .player1 ? .player2 : .player1
-        let game = TicTacToeGame(player: player)
+        let player: Player = currentPlayer == .player1 ? .player2 : .player1
+        let game = TicTacToeGame(nextPlayer: player, newGrid: newGrid)
         
         return .playing(game: game, nextPlayer: player)
-    }
-    
-    private func isWithinGridBounds(coordinates: Coordinates) -> Bool {
-        return (1...3 ~= coordinates.x) && (1...3 ~= coordinates.y)
     }
     
 }
@@ -85,6 +84,20 @@ class TicTacToeGameTests: XCTestCase {
         
         let greaterThanThreeYCoordinate = Coordinates(x: 1, y: 4)
         XCTAssertNil(sut.playMove(at: greaterThanThreeYCoordinate), "Greater than 3 y-coordinate should result in nil for playMove")
+    }
+    
+    func test_playMove_returnsNilOnPlayingSameCoordinates() {
+        let sut = TicTacToeGame()
+        
+        let coordinates = Coordinates(x: 1, y: 1)
+        guard let newGameState = sut.playMove(at: coordinates) else {
+            return XCTFail("playMove returned nil")
+        }
+        guard case let TicTacToeGameState.playing(game, _) = newGameState else {
+            return XCTFail("playMove did not return playing state with game and nextPlayer")
+        }
+        
+        XCTAssertNil(game.playMove(at: coordinates))
     }
     
 }
