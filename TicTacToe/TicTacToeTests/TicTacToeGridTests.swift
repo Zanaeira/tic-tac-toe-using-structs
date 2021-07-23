@@ -49,7 +49,7 @@ enum Player {
 
 class TicTacToeGridTests: XCTestCase {
     
-    func test_fillSlot_xCoordinateCantBeNegative() {
+    func test_fillSlot_xCoordinateCannotBeNegative() {
         let sut = TicTacToeGrid()
         
         let negativeXCoordinates = Coordinates(x: -1, y: 1)
@@ -57,7 +57,7 @@ class TicTacToeGridTests: XCTestCase {
         XCTAssertNil(sut.fillSlot(at: negativeXCoordinates, for: .player1))
     }
     
-    func test_fillSlot_yCoordinateCantBeNegative() {
+    func test_fillSlot_yCoordinateCannotBeNegative() {
         let sut = TicTacToeGrid()
         
         let negativeYCoordinates = Coordinates(x: 1, y: -1)
@@ -65,7 +65,7 @@ class TicTacToeGridTests: XCTestCase {
         XCTAssertNil(sut.fillSlot(at: negativeYCoordinates, for: .player1))
     }
     
-    func test_fillSlot_xCoordinateCantBeZero() {
+    func test_fillSlot_xCoordinateCannotBeZero() {
         let sut = TicTacToeGrid()
         
         let zeroXCoordinates = Coordinates(x: 0, y: -1)
@@ -73,7 +73,7 @@ class TicTacToeGridTests: XCTestCase {
         XCTAssertNil(sut.fillSlot(at: zeroXCoordinates, for: .player1))
     }
     
-    func test_fillSlot_yCoordinateCantBeZero() {
+    func test_fillSlot_yCoordinateCannotBeZero() {
         let sut = TicTacToeGrid()
         
         let zeroYCoordinates = Coordinates(x: 1, y: 0)
@@ -81,7 +81,7 @@ class TicTacToeGridTests: XCTestCase {
         XCTAssertNil(sut.fillSlot(at: zeroYCoordinates, for: .player1))
     }
     
-    func test_fillSlot_xCoordinateCantBeGreaterThanThree() {
+    func test_fillSlot_xCoordinateCannotBeGreaterThanThree() {
         let sut = TicTacToeGrid()
         
         let greaterThanThreeXCoordinates = Coordinates(x: 4, y: 1)
@@ -89,7 +89,7 @@ class TicTacToeGridTests: XCTestCase {
         XCTAssertNil(sut.fillSlot(at: greaterThanThreeXCoordinates, for: .player1))
     }
     
-    func test_fillSlot_yCoordinateCantBeGreaterThanThree() {
+    func test_fillSlot_yCoordinateCannotBeGreaterThanThree() {
         let sut = TicTacToeGrid()
         
         let greaterThanThreeYCoordinates = Coordinates(x: 1, y: 4)
