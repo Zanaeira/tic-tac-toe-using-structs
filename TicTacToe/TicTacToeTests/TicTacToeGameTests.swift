@@ -105,27 +105,36 @@ class TicTacToeGameTests: XCTestCase {
         XCTAssertNil(game.playMove(at: coordinates))
     }
     
-    func test_playMove_returnsWinnerOnWin() {
-        guard let winningGameState = gameWithWinner() else {
-            return XCTFail("Winning game expected, nil game state found")
-        }
-        
-        print(winningGameState)
-        
-        guard case TicTacToeGameState.winner = winningGameState else {
-            return XCTFail("Winning game expected, \(winningGameState) found")
-        }
+    func test_playMove_returnsWinnerOnHorizontalWinningCombinations() {
+        checkForHorizontalWin(row: 1)
+        checkForHorizontalWin(row: 2)
+        checkForHorizontalWin(row: 3)
     }
     
     // MARK: - Helpers
-    private func gameWithWinner() -> TicTacToeGameState? {
+    
+    private func checkForHorizontalWin(row: Int, file: StaticString = #file, line: UInt = #line) {
+        let winningCoordinates: [Coordinates] = [
+            Coordinates(x: row, y: 1), Coordinates(x: row, y: 2), Coordinates(x: row, y: 3)
+        ]
+        let moves = makeDemoGameMoves(winningCoordinates: winningCoordinates, horizontalWin: true, rowOrColumnNumber: row)
+        
+        playGame(withWinAt: winningCoordinates, usingMoves: moves)
+    }
+    
+    private func makeDemoGameMoves(winningCoordinates: [Coordinates], horizontalWin: Bool, rowOrColumnNumber: Int) -> [Coordinates] {
+        let opponentRowOrColumn = rowOrColumnNumber == 1 ? 2 : rowOrColumnNumber == 2 ? 3 : 2
+        
+        let moves: [Coordinates] =
+            horizontalWin ? [winningCoordinates[0], Coordinates(x: opponentRowOrColumn, y: 1), winningCoordinates[1], Coordinates(x: opponentRowOrColumn, y: 2), winningCoordinates[2]] :
+                            [winningCoordinates[0], Coordinates(x: 1, y: opponentRowOrColumn), winningCoordinates[1], Coordinates(x: 2, y: opponentRowOrColumn), winningCoordinates[2]]
+        
+        return moves
+    }
+    
+    private func playGame(withWinAt winningCoordinates: [Coordinates], usingMoves moves: [Coordinates]) {
         var game = TicTacToeGame()
         var gameState: TicTacToeGameState?
-        let moves: [Coordinates] = [.init(x: 1, y: 1),
-                                    .init(x: 2, y: 1),
-                                    .init(x: 1, y: 2),
-                                    .init(x: 2, y: 2),
-                                    .init(x: 1, y: 3)]
         
         moves.forEach { coordinates in
             guard let newGameState = game.playMove(at: coordinates) else {
@@ -134,12 +143,17 @@ class TicTacToeGameTests: XCTestCase {
             
             switch newGameState {
             case let .playing(gameInProgress, _): game = gameInProgress
-            case .winner: gameState = newGameState
+            case .winner:
+                gameState = newGameState
+                break
             }
             
             gameState = game.playMove(at: coordinates)
         }
-        return gameState
+        
+        guard case TicTacToeGameState.winner = gameState! else {
+            return XCTFail("Expected winner state, got: \(gameState.debugDescription)")
+        }
     }
     
 }
