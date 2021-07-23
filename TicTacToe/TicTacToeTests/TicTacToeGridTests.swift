@@ -9,24 +9,50 @@ import XCTest
 
 struct TicTacToeGrid {
     
-    func fillSlot(at coordinates: Coordinates) -> TicTacToeGrid? {
-        return nil
+    private let slots: [Coordinates: Player]
+    
+    init() {
+        slots = [:]
+    }
+    
+    private init(slots: [Coordinates: Player]) {
+        self.slots = slots
+    }
+    
+    func fillSlot(at coordinates: Coordinates, for player: Player) -> TicTacToeGrid? {
+        guard (coordinates.x > 0),
+              (coordinates.y > 0),
+              (coordinates.x < 4),
+              (coordinates.y < 4) else { return nil }
+        
+        var newSlots =  slots
+        newSlots[coordinates] = player
+        
+        return TicTacToeGrid(slots: newSlots)
+    }
+    
+    func player(at coordinates: Coordinates) -> Player? {
+        return .player1
     }
     
 }
 
-struct Coordinates {
+struct Coordinates: Hashable {
     let x, y: Int
 }
 
-class TicTacToeGridTests: XCTestCase {
+enum Player {
+    case player1, player2
+}
 
+class TicTacToeGridTests: XCTestCase {
+    
     func test_fillSlot_xCoordinateCantBeNegative() {
         let sut = TicTacToeGrid()
         
         let negativeXCoordinates = Coordinates(x: -1, y: 1)
         
-        XCTAssertNil(sut.fillSlot(at: negativeXCoordinates))
+        XCTAssertNil(sut.fillSlot(at: negativeXCoordinates, for: .player1))
     }
     
     func test_fillSlot_yCoordinateCantBeNegative() {
@@ -34,7 +60,7 @@ class TicTacToeGridTests: XCTestCase {
         
         let negativeYCoordinates = Coordinates(x: 1, y: -1)
         
-        XCTAssertNil(sut.fillSlot(at: negativeYCoordinates))
+        XCTAssertNil(sut.fillSlot(at: negativeYCoordinates, for: .player1))
     }
     
     func test_fillSlot_xCoordinateCantBeZero() {
@@ -42,7 +68,7 @@ class TicTacToeGridTests: XCTestCase {
         
         let zeroXCoordinates = Coordinates(x: 0, y: -1)
         
-        XCTAssertNil(sut.fillSlot(at: zeroXCoordinates))
+        XCTAssertNil(sut.fillSlot(at: zeroXCoordinates, for: .player1))
     }
     
     func test_fillSlot_yCoordinateCantBeZero() {
@@ -50,7 +76,7 @@ class TicTacToeGridTests: XCTestCase {
         
         let zeroYCoordinates = Coordinates(x: 1, y: 0)
         
-        XCTAssertNil(sut.fillSlot(at: zeroYCoordinates))
+        XCTAssertNil(sut.fillSlot(at: zeroYCoordinates, for: .player1))
     }
     
     func test_fillSlot_xCoordinateCantBeGreaterThanThree() {
@@ -58,7 +84,7 @@ class TicTacToeGridTests: XCTestCase {
         
         let greaterThanThreeXCoordinates = Coordinates(x: 4, y: 1)
         
-        XCTAssertNil(sut.fillSlot(at: greaterThanThreeXCoordinates))
+        XCTAssertNil(sut.fillSlot(at: greaterThanThreeXCoordinates, for: .player1))
     }
     
     func test_fillSlot_yCoordinateCantBeGreaterThanThree() {
@@ -66,7 +92,16 @@ class TicTacToeGridTests: XCTestCase {
         
         let greaterThanThreeYCoordinates = Coordinates(x: 1, y: 4)
         
-        XCTAssertNil(sut.fillSlot(at: greaterThanThreeYCoordinates))
+        XCTAssertNil(sut.fillSlot(at: greaterThanThreeYCoordinates, for: .player1))
+    }
+    
+    func test_fillSlot_canAddPlayerWithinGridBounds() {
+        let sut = TicTacToeGrid()
+        
+        let coordinates = Coordinates(x: 1, y: 1)
+        let grid = sut.fillSlot(at: coordinates, for: .player1)
+        
+        XCTAssertEqual(grid?.player(at: coordinates), Player.player1)
     }
     
 }
