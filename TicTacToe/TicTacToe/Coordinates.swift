@@ -8,7 +8,7 @@
 import Foundation
 
 public struct Coordinates: Hashable {
-    let x, y: Int
+    public let x, y: Int
     
     public init(x: Int, y: Int) {
         self.x = x
