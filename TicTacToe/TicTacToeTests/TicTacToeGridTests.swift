@@ -44,5 +44,13 @@ class TicTacToeGridTests: XCTestCase {
         
         XCTAssertNil(sut.fillSlot(at: zeroXCoordinates))
     }
+    
+    func test_fillSlot_yCoordinateCantBeZero() {
+        let sut = TicTacToeGrid()
+        
+        let zeroYCoordinates = Coordinates(x: 1, y: 0)
+        
+        XCTAssertNil(sut.fillSlot(at: zeroYCoordinates))
+    }
 
 }
