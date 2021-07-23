@@ -20,7 +20,8 @@ struct TicTacToeGrid {
     }
     
     func fillSlot(at coordinates: Coordinates, for player: Player) -> TicTacToeGrid? {
-        guard isWithinGridBounds(coordinates: coordinates) else { return nil }
+        guard isWithinGridBounds(coordinates: coordinates),
+              slots[coordinates] == nil else { return nil }
         
         var newSlots =  slots
         newSlots[coordinates] = player
@@ -103,6 +104,15 @@ class TicTacToeGridTests: XCTestCase {
         let grid = sut.fillSlot(at: coordinates, for: .player1)
         
         XCTAssertEqual(grid?.player(at: coordinates), Player.player1)
+    }
+    
+    func test_fillSlot_cannotAddPlayerToAlreadyFilledSlot() {
+        var sut: TicTacToeGrid? = TicTacToeGrid()
+        
+        let coordinates = Coordinates(x: 1, y: 1)
+        sut = sut?.fillSlot(at: coordinates, for: .player1)
+        
+        XCTAssertNil(sut?.fillSlot(at: coordinates, for: .player1))
     }
     
 }
