@@ -117,6 +117,11 @@ class TicTacToeGameTests: XCTestCase {
         checkForVerticalWin(column: 3)
     }
     
+    func test_playMove_returnsWinnerOnDiagonalWinningCombinations() {
+        checkForTopLeftDiagonalWin()
+        checkForBottomLeftDiagonalWin()
+    }
+    
     // MARK: - Helpers
     
     private func checkForHorizontalWin(row: Int, file: StaticString = #file, line: UInt = #line) {
@@ -135,6 +140,28 @@ class TicTacToeGameTests: XCTestCase {
         let moves = makeDemoGameMoves(winningCoordinates: winningCoordinates, horizontalWin: false, rowOrColumnNumber: column)
         
         playWinningGame(usingMoves: moves)
+    }
+    
+    private func checkForTopLeftDiagonalWin(file: StaticString = #file, line: UInt = #line) {
+        let topLeftDiagonalWinCoordinates: [Coordinates] = [
+            Coordinates(x: 1, y: 1), Coordinates(x: 2, y: 2), Coordinates(x: 3, y: 3)
+        ]
+        let moves = demoMovesForDiagonalWinGame(withWinningCoordinates: topLeftDiagonalWinCoordinates)
+        
+        playWinningGame(usingMoves: moves)
+    }
+    
+    private func checkForBottomLeftDiagonalWin(file: StaticString = #file, line: UInt = #line) {
+        let bottomLeftDiagonalWinCoordinates: [Coordinates] = [
+            Coordinates(x: 1, y: 3), Coordinates(x: 2, y: 2), Coordinates(x: 3, y: 1)
+        ]
+        let moves = demoMovesForDiagonalWinGame(withWinningCoordinates: bottomLeftDiagonalWinCoordinates)
+        
+        playWinningGame(usingMoves: moves)
+    }
+    
+    private func demoMovesForDiagonalWinGame(withWinningCoordinates winningCoordinates: [Coordinates]) -> [Coordinates] {
+        return [winningCoordinates[0], Coordinates(x: 1, y: 2), winningCoordinates[1], Coordinates(x: 2, y: 3), winningCoordinates[2]]
     }
     
     private func makeDemoGameMoves(winningCoordinates: [Coordinates], horizontalWin: Bool, rowOrColumnNumber: Int) -> [Coordinates] {
