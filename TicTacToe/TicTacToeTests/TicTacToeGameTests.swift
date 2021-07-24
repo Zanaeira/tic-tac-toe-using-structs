@@ -122,6 +122,11 @@ class TicTacToeGameTests: XCTestCase {
         checkForBottomLeftDiagonalWin()
     }
     
+    func test_playMove_returnsCorrectWinnerOnWin() {
+        playWinningGame(for: .player1)
+        playWinningGame(for: .player2)
+    }
+    
     // MARK: - Helpers
     
     private func checkForHorizontalWin(row: Int, file: StaticString = #file, line: UInt = #line) {
@@ -130,7 +135,7 @@ class TicTacToeGameTests: XCTestCase {
         ]
         let moves = makeDemoGameMoves(winningCoordinates: winningCoordinates, horizontalWin: true, rowOrColumnNumber: row)
         
-        playWinningGame(usingMoves: moves)
+        playWinningGame(usingMoves: moves, file: file, line: line)
     }
     
     private func checkForVerticalWin(column: Int, file: StaticString = #file, line: UInt = #line) {
@@ -139,7 +144,7 @@ class TicTacToeGameTests: XCTestCase {
         ]
         let moves = makeDemoGameMoves(winningCoordinates: winningCoordinates, horizontalWin: false, rowOrColumnNumber: column)
         
-        playWinningGame(usingMoves: moves)
+        playWinningGame(usingMoves: moves, file: file, line: line)
     }
     
     private func checkForTopLeftDiagonalWin(file: StaticString = #file, line: UInt = #line) {
@@ -148,7 +153,7 @@ class TicTacToeGameTests: XCTestCase {
         ]
         let moves = demoMovesForDiagonalWinGame(withWinningCoordinates: topLeftDiagonalWinCoordinates)
         
-        playWinningGame(usingMoves: moves)
+        playWinningGame(usingMoves: moves, file: file, line: line)
     }
     
     private func checkForBottomLeftDiagonalWin(file: StaticString = #file, line: UInt = #line) {
@@ -157,7 +162,7 @@ class TicTacToeGameTests: XCTestCase {
         ]
         let moves = demoMovesForDiagonalWinGame(withWinningCoordinates: bottomLeftDiagonalWinCoordinates)
         
-        playWinningGame(usingMoves: moves)
+        playWinningGame(usingMoves: moves, file: file, line: line)
     }
     
     private func demoMovesForDiagonalWinGame(withWinningCoordinates winningCoordinates: [Coordinates]) -> [Coordinates] {
@@ -174,7 +179,8 @@ class TicTacToeGameTests: XCTestCase {
         return moves
     }
     
-    private func playWinningGame(usingMoves moves: [Coordinates]) {
+    @discardableResult
+    private func playWinningGame(usingMoves moves: [Coordinates], file: StaticString = #file, line: UInt = #line) -> TicTacToeGameState {
         var game = TicTacToeGame()
         var gameState: TicTacToeGameState?
         
@@ -194,8 +200,50 @@ class TicTacToeGameTests: XCTestCase {
         }
         
         guard case TicTacToeGameState.winner = gameState! else {
-            return XCTFail("Expected winner state, got: \(gameState.debugDescription)")
+            XCTFail("Expected winner state, got: \(gameState.debugDescription)")
+            return gameState!
         }
+        
+        return gameState!
+    }
+    
+    private func playWinningGame(for player: Player, file: StaticString = #file, line: UInt = #line) {
+        let moves = player == .player1 ? movesForPlayerOneWin() : movesForPlayerTwoWin()
+        
+        let gameState = playWinningGame(usingMoves: moves, file: file, line: line)
+        switch gameState {
+        case let .winner(winner: winner):
+            XCTAssertEqual(winner, player, "Expected winner: \(player), got: \(winner)")
+        case .playing:
+            XCTFail("Expected winner: \(player). Got playing state.")
+        }
+    }
+    
+    private func movesForPlayerOneWin() -> [Coordinates] {
+        return [
+            Coordinates(x: 1, y: 1),
+            Coordinates(x: 2, y: 2),
+            Coordinates(x: 3, y: 1),
+            Coordinates(x: 2, y: 1),
+            Coordinates(x: 2, y: 3),
+            Coordinates(x: 3, y: 2),
+            Coordinates(x: 1, y: 2),
+            Coordinates(x: 3, y: 3),
+            Coordinates(x: 1, y: 3)
+        ]
+    }
+    
+    private func movesForPlayerTwoWin() -> [Coordinates] {
+        return [
+            Coordinates(x: 1, y: 1),
+            Coordinates(x: 2, y: 2),
+            Coordinates(x: 3, y: 1),
+            Coordinates(x: 2, y: 1),
+            Coordinates(x: 2, y: 3),
+            Coordinates(x: 3, y: 2),
+            Coordinates(x: 3, y: 3),
+            Coordinates(x: 1, y: 2)
+        ]
     }
     
 }
