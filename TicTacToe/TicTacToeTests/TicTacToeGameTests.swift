@@ -111,6 +111,12 @@ class TicTacToeGameTests: XCTestCase {
         checkForHorizontalWin(row: 3)
     }
     
+    func test_playMove_returnsWinnerOnVerticalWinningCombinations() {
+        checkForVerticalWin(column: 1)
+        checkForVerticalWin(column: 2)
+        checkForVerticalWin(column: 3)
+    }
+    
     // MARK: - Helpers
     
     private func checkForHorizontalWin(row: Int, file: StaticString = #file, line: UInt = #line) {
@@ -118,6 +124,15 @@ class TicTacToeGameTests: XCTestCase {
             Coordinates(x: row, y: 1), Coordinates(x: row, y: 2), Coordinates(x: row, y: 3)
         ]
         let moves = makeDemoGameMoves(winningCoordinates: winningCoordinates, horizontalWin: true, rowOrColumnNumber: row)
+        
+        playGame(withWinAt: winningCoordinates, usingMoves: moves)
+    }
+    
+    private func checkForVerticalWin(column: Int, file: StaticString = #file, line: UInt = #line) {
+        let winningCoordinates: [Coordinates] = [
+            Coordinates(x: 1, y: column), Coordinates(x: 2, y: column), Coordinates(x: 3, y: column)
+        ]
+        let moves = makeDemoGameMoves(winningCoordinates: winningCoordinates, horizontalWin: false, rowOrColumnNumber: column)
         
         playGame(withWinAt: winningCoordinates, usingMoves: moves)
     }
