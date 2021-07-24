@@ -158,6 +158,9 @@ class TicTacToeGameTests: XCTestCase {
             
             switch newGameState {
             case let .playing(gameInProgress, _): game = gameInProgress
+            case let .playing(gameInProgress, _):
+                game = gameInProgress
+                gameState = newGameState
             case .winner:
                 gameState = newGameState
                 break
