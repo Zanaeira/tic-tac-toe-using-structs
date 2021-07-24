@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct TicTacToeGrid {
+struct TicTacToeGrid {
     
     private let slots: [Coordinates: Player]
     private var remainingNumberOfMoves: Int {
@@ -15,7 +15,7 @@ public struct TicTacToeGrid {
     }
     private let maximumNumberOfMoves = 9
     
-    public init() {
+    init() {
         slots = [:]
     }
     
@@ -23,7 +23,7 @@ public struct TicTacToeGrid {
         self.slots = slots
     }
     
-    public func fillSlot(at coordinates: Coordinates, for player: Player) -> TicTacToeGrid? {
+    func fillSlot(at coordinates: Coordinates, for player: Player) -> TicTacToeGrid? {
         let coordinatesAreWithinGridBounds = isWithinGridBounds(coordinates: coordinates)
         let slotIsEmpty = slotIsNotAlreadyFilled(at: coordinates)
         guard coordinatesAreWithinGridBounds, slotIsEmpty else {
@@ -36,11 +36,11 @@ public struct TicTacToeGrid {
         return TicTacToeGrid(slots: newSlots)
     }
     
-    public func player(at coordinates: Coordinates) -> Player? {
+    func player(at coordinates: Coordinates) -> Player? {
         return slots[coordinates]
     }
     
-    public func checkForWin() -> Bool {
+    func checkForWin() -> Bool {
         for i in 1...3 {
             var currentPlayer = player(at: Coordinates(x: i, y: 1))
             
@@ -76,7 +76,7 @@ public struct TicTacToeGrid {
         return false
     }
     
-    public func checkForDraw() -> Bool {
+    func checkForDraw() -> Bool {
         return (remainingNumberOfMoves == 0) && (!checkForWin())
     }
     

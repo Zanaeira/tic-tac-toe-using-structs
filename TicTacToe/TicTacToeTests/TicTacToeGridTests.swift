@@ -6,7 +6,7 @@
 //
 
 import XCTest
-import TicTacToe
+@testable import TicTacToe
 
 class TicTacToeGridTests: XCTestCase {
     
