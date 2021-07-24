@@ -147,8 +147,6 @@ class TicTacToeGameTests: XCTestCase {
                 gameState = newGameState
                 break
             }
-            
-            gameState = game.playMove(at: coordinates)
         }
         
         guard case TicTacToeGameState.winner = gameState! else {
