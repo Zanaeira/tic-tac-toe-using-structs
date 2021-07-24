@@ -13,6 +13,8 @@
 		1BE0050126AA4740003F5F54 /* Coordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE0050026AA4740003F5F54 /* Coordinates.swift */; };
 		1BE0050326AA474C003F5F54 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE0050226AA474C003F5F54 /* Player.swift */; };
 		1BE0050526AB36D9003F5F54 /* TicTacToeGameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE0050426AB36D9003F5F54 /* TicTacToeGameTests.swift */; };
+		1BE0050726AC5F05003F5F54 /* TicTacToeGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE0050626AC5F05003F5F54 /* TicTacToeGame.swift */; };
+		1BE0050926AC5F1B003F5F54 /* TicTacToeGameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE0050826AC5F1B003F5F54 /* TicTacToeGameState.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +37,8 @@
 		1BE0050026AA4740003F5F54 /* Coordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinates.swift; sourceTree = "<group>"; };
 		1BE0050226AA474C003F5F54 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		1BE0050426AB36D9003F5F54 /* TicTacToeGameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacToeGameTests.swift; sourceTree = "<group>"; };
+		1BE0050626AC5F05003F5F54 /* TicTacToeGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacToeGame.swift; sourceTree = "<group>"; };
+		1BE0050826AC5F1B003F5F54 /* TicTacToeGameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacToeGameState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +84,8 @@
 				1BE004E826AA1CCE003F5F54 /* Info.plist */,
 				1BE004FE26AA472D003F5F54 /* TicTacToeGrid.swift */,
 				1BE0050026AA4740003F5F54 /* Coordinates.swift */,
+				1BE0050626AC5F05003F5F54 /* TicTacToeGame.swift */,
+				1BE0050826AC5F1B003F5F54 /* TicTacToeGameState.swift */,
 				1BE0050226AA474C003F5F54 /* Player.swift */,
 			);
 			path = TicTacToe;
@@ -203,7 +209,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1BE0050726AC5F05003F5F54 /* TicTacToeGame.swift in Sources */,
 				1BE004FF26AA472D003F5F54 /* TicTacToeGrid.swift in Sources */,
+				1BE0050926AC5F1B003F5F54 /* TicTacToeGameState.swift in Sources */,
 				1BE0050326AA474C003F5F54 /* Player.swift in Sources */,
 				1BE0050126AA4740003F5F54 /* Coordinates.swift in Sources */,
 			);
