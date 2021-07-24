@@ -125,7 +125,7 @@ class TicTacToeGameTests: XCTestCase {
         ]
         let moves = makeDemoGameMoves(winningCoordinates: winningCoordinates, horizontalWin: true, rowOrColumnNumber: row)
         
-        playGame(withWinAt: winningCoordinates, usingMoves: moves)
+        playWinningGame(usingMoves: moves)
     }
     
     private func checkForVerticalWin(column: Int, file: StaticString = #file, line: UInt = #line) {
@@ -134,7 +134,7 @@ class TicTacToeGameTests: XCTestCase {
         ]
         let moves = makeDemoGameMoves(winningCoordinates: winningCoordinates, horizontalWin: false, rowOrColumnNumber: column)
         
-        playGame(withWinAt: winningCoordinates, usingMoves: moves)
+        playWinningGame(usingMoves: moves)
     }
     
     private func makeDemoGameMoves(winningCoordinates: [Coordinates], horizontalWin: Bool, rowOrColumnNumber: Int) -> [Coordinates] {
@@ -147,7 +147,7 @@ class TicTacToeGameTests: XCTestCase {
         return moves
     }
     
-    private func playGame(withWinAt winningCoordinates: [Coordinates], usingMoves moves: [Coordinates]) {
+    private func playWinningGame(usingMoves moves: [Coordinates]) {
         var game = TicTacToeGame()
         var gameState: TicTacToeGameState?
         
@@ -157,7 +157,6 @@ class TicTacToeGameTests: XCTestCase {
             }
             
             switch newGameState {
-            case let .playing(gameInProgress, _): game = gameInProgress
             case let .playing(gameInProgress, _):
                 game = gameInProgress
                 gameState = newGameState
