@@ -10,6 +10,10 @@ import Foundation
 public struct TicTacToeGrid {
     
     private let slots: [Coordinates: Player]
+    private var remainingNumberOfMoves: Int {
+        maximumNumberOfMoves - slots.count
+    }
+    private let maximumNumberOfMoves = 9
     
     public init() {
         slots = [:]
@@ -70,6 +74,10 @@ public struct TicTacToeGrid {
         }
         
         return false
+    }
+    
+    public func checkForDraw() -> Bool {
+        return (remainingNumberOfMoves == 0) && (!checkForWin())
     }
     
     private func isWithinGridBounds(coordinates: Coordinates) -> Bool {

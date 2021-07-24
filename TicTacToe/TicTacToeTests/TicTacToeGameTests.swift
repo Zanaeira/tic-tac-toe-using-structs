@@ -30,6 +30,10 @@ struct TicTacToeGame {
             return .winner(winner: currentPlayer)
         }
         
+        if newGrid.checkForDraw() {
+            return .draw
+        }
+        
         let player: Player = currentPlayer == .player1 ? .player2 : .player1
         let game = TicTacToeGame(nextPlayer: player, newGrid: newGrid)
         
@@ -41,6 +45,7 @@ struct TicTacToeGame {
 enum TicTacToeGameState {
     case playing(game: TicTacToeGame, nextPlayer: Player)
     case winner(winner: Player)
+    case draw
 }
 
 class TicTacToeGameTests: XCTestCase {
@@ -127,6 +132,30 @@ class TicTacToeGameTests: XCTestCase {
         playWinningGame(for: .player2)
     }
     
+    func test_playMove_returnsDrawAtEndOfGameIfNoWinner() {
+        var sut = TicTacToeGame()
+        var gameState: TicTacToeGameState?
+        
+        let moves = movesForDraw()
+        
+        moves.forEach { coordinates in
+            gameState = sut.playMove(at: coordinates)
+            
+            switch gameState! {
+            case let .playing(gameInProgress, _):
+                sut = gameInProgress
+            case .draw:
+                break
+            case .winner:
+                XCTFail("Game should have ended in draw")
+            }
+        }
+        
+        guard case TicTacToeGameState.draw = gameState! else {
+            return XCTFail("Expected draw, but was \(gameState.debugDescription)")
+        }
+    }
+    
     // MARK: - Helpers
     
     private func checkForHorizontalWin(row: Int, file: StaticString = #file, line: UInt = #line) {
@@ -193,6 +222,8 @@ class TicTacToeGameTests: XCTestCase {
             case let .playing(gameInProgress, _):
                 game = gameInProgress
                 gameState = newGameState
+            case .draw:
+                return XCTFail("Game should have ended in win, got draw")
             case .winner:
                 gameState = newGameState
                 break
@@ -214,7 +245,7 @@ class TicTacToeGameTests: XCTestCase {
         switch gameState {
         case let .winner(winner: winner):
             XCTAssertEqual(winner, player, "Expected winner: \(player), got: \(winner)")
-        case .playing:
+        case .playing, .draw:
             XCTFail("Expected winner: \(player). Got playing state.")
         }
     }
@@ -243,6 +274,20 @@ class TicTacToeGameTests: XCTestCase {
             Coordinates(x: 3, y: 2),
             Coordinates(x: 3, y: 3),
             Coordinates(x: 1, y: 2)
+        ]
+    }
+    
+    private func movesForDraw() -> [Coordinates] {
+        return [
+            Coordinates(x: 1, y: 1),
+            Coordinates(x: 2, y: 2),
+            Coordinates(x: 3, y: 1),
+            Coordinates(x: 2, y: 1),
+            Coordinates(x: 2, y: 3),
+            Coordinates(x: 3, y: 2),
+            Coordinates(x: 1, y: 2),
+            Coordinates(x: 1, y: 3),
+            Coordinates(x: 3, y: 3)
         ]
     }
     
