@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -16,6 +16,8 @@
 		1BE0050726AC5F05003F5F54 /* TicTacToeGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE0050626AC5F05003F5F54 /* TicTacToeGame.swift */; };
 		1BE0050926AC5F1B003F5F54 /* TicTacToeGameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE0050826AC5F1B003F5F54 /* TicTacToeGameState.swift */; };
 		1BE0051826AC9296003F5F54 /* TicTacToe_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BE0050F26AC9296003F5F54 /* TicTacToe_iOS.framework */; };
+		1BE0052B26AEE790003F5F54 /* TicTacToe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BE004E426AA1CCE003F5F54 /* TicTacToe.framework */; platformFilter = ios; };
+		1BE0052C26AEE790003F5F54 /* TicTacToe.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1BE004E426AA1CCE003F5F54 /* TicTacToe.framework */; platformFilter = ios; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,7 +35,28 @@
 			remoteGlobalIDString = 1BE0050E26AC9296003F5F54;
 			remoteInfo = "TicTacToe-iOS";
 		};
+		1BE0052D26AEE790003F5F54 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1BE004DB26AA1CCE003F5F54 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1BE004E326AA1CCE003F5F54;
+			remoteInfo = TicTacToe;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		1BE0052F26AEE790003F5F54 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				1BE0052C26AEE790003F5F54 /* TicTacToe.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1BE004E426AA1CCE003F5F54 /* TicTacToe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TicTacToe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -73,6 +96,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1BE0052B26AEE790003F5F54 /* TicTacToe.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,6 +119,7 @@
 				1BE0051026AC9296003F5F54 /* TicTacToe-iOS */,
 				1BE0051B26AC9296003F5F54 /* TicTacToe-iOSTests */,
 				1BE004E526AA1CCE003F5F54 /* Products */,
+				1BE0052A26AEE790003F5F54 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -146,6 +171,13 @@
 				1BE0051E26AC9296003F5F54 /* Info.plist */,
 			);
 			path = "TicTacToe-iOSTests";
+			sourceTree = "<group>";
+		};
+		1BE0052A26AEE790003F5F54 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -212,10 +244,12 @@
 				1BE0050B26AC9296003F5F54 /* Sources */,
 				1BE0050C26AC9296003F5F54 /* Frameworks */,
 				1BE0050D26AC9296003F5F54 /* Resources */,
+				1BE0052F26AEE790003F5F54 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				1BE0052E26AEE790003F5F54 /* PBXTargetDependency */,
 			);
 			name = "TicTacToe-iOS";
 			productName = "TicTacToe-iOS";
@@ -261,6 +295,7 @@
 					};
 					1BE0051626AC9296003F5F54 = {
 						CreatedOnToolsVersion = 12.5.1;
+						LastSwiftMigration = 1250;
 					};
 				};
 			};
@@ -364,6 +399,12 @@
 			isa = PBXTargetDependency;
 			target = 1BE0050E26AC9296003F5F54 /* TicTacToe-iOS */;
 			targetProxy = 1BE0051926AC9296003F5F54 /* PBXContainerItemProxy */;
+		};
+		1BE0052E26AEE790003F5F54 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			platformFilter = ios;
+			target = 1BE004E326AA1CCE003F5F54 /* TicTacToe */;
+			targetProxy = 1BE0052D26AEE790003F5F54 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -634,6 +675,7 @@
 		1BE0052426AC9296003F5F54 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HHWJTGZ862;
 				INFOPLIST_FILE = "TicTacToe-iOSTests/Info.plist";
@@ -646,6 +688,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Zanaeira.TicTacToe-iOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -654,6 +697,7 @@
 		1BE0052526AC9296003F5F54 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HHWJTGZ862;
 				INFOPLIST_FILE = "TicTacToe-iOSTests/Info.plist";
